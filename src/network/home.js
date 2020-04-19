@@ -7,13 +7,15 @@ export function getHomeMultidata() {
 }
 
 
-// 原接口配置
-// export function getHomeGoods(type, page) {
-//   return request({
-//     url: '/home/data',
-//     params: {
-//       type,
-//       page
-//     }
-//   })
-// }
+// 原接口配置   如果get请求方式params此参数会拼接到url上，最后形式为:/home/data?type=''&page=1
+export function getHomeGoods(type,page) {
+  return request({
+    method: 'post',
+    url: '/home/data',
+    // 不能设为params
+    data: {
+      type,
+      page
+    }
+  })
+}
