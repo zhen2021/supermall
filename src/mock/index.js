@@ -52,7 +52,8 @@ const listMethods = function(num,type) {
       link: Random.url('https'),
       title: Random.cword(30),
       cfav:Random.natural(0, 300),
-      price:Random.natural(50, 300)
+      price:Random.natural(50, 300),
+      id:Random.string( 'number', 7,7 ),
     }
     list.push(listObject)
   } 

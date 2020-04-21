@@ -1,12 +1,14 @@
 <template>
   <div id="home">
     <nav-bar class="home-nav"><div slot="center">团购网</div></nav-bar>
+    <!-- 此处是脱离scroll，实现吸顶替换 -->
+    <tab-control :titles="['流行','新款','精选']" @tabClick="tabClick" ref="tabControl1" class="tab-control" v-show="isTabFixed"/>
     <scroll class="content" ref="scroll" :probe-type="3" :pull-up-load="true" @scroll="contentScroll" @pullingUp="loadMore">
-        <home-swiper :banners="banners"/>
+        <home-swiper :banners="banners" @swiperImageLoad="swiperImageLoad"/>
         <recommend-view :recommends="recommends"/>
         <feature-view/>
 
-        <tab-control class="tab-control" :titles="['流行','新款','精选']" @tabClick="tabClick"/>
+        <tab-control :titles="['流行','新款','精选']" @tabClick="tabClick" ref="tabControl2"/>
         <goods-list :goods="showGoods"/>
     </scroll>
     
@@ -26,6 +28,7 @@ import Scroll from 'components/common/scroll/Scroll'
 import BackTop from 'components/content/backTop/BackTop'
 
 import {getHomeMultidata, getHomeGoods} from 'network/home'
+import {debounce} from 'common/utils'
 
 export default {
   name:'Home',
@@ -51,7 +54,10 @@ export default {
       },
       currentType:'pop',
 
-      isShowBackTop: false
+      isShowBackTop: false,
+      tabOffsetTop:0,
+      isTabFixed:false,
+      saveY:0
     }
   },
   computed: {
@@ -59,6 +65,15 @@ export default {
       // 根据单击动态改变展示的商品类别，传给子组件
       return this.goods[this.currentType].list
     }
+  },
+
+//组件离开活跃状态记录滚动位置，回来时恢复
+  activated () {
+    this.$refs.scroll.refresh()
+    this.$refs.scroll.scrollTo(0, this.saveY ,0)
+  },
+  deactivated () {
+    this.saveY = this.$refs.scroll.getScrollY()
   },
 
   //组件一旦创建好了发送网络请求
@@ -70,15 +85,17 @@ export default {
     this.getHomeGoods('new')
     this.getHomeGoods('sell')
   },
+
+  // 挂载图片不一定加载完，仅仅结构挂载
   mounted () {
     // 把函数传给防抖方法，接收的是方法返回的防抖函数，并且有闭包不会被回收
-    const refresh =  this.debounce(this.$refs.scroll.refresh,200)
-
+    const refresh = debounce(this.$refs.scroll.refresh,200)
     // 准备好通过事件总线监听事件，监听itemImageLoad图片加载完成
     // 每次图片加载完成就行一次scroll的刷新，重新计算高度
     this.$bus.$on('itemImageLoad',() => {
       refresh()
     })
+
   },
   methods: {
     // tabControl单击事件 
@@ -91,18 +108,21 @@ export default {
         case 2: this.currentType = 'sell'
         break
       }
+      this.$refs.tabControl1.currentIndex = index
+      this.$refs.tabControl2.currentIndex = index
     },
     backClick() {
       // 拿到scroll组件，再拿到scroll属性对应对象，再使用其方法第三个参数是毫秒
       // this.$refs.scroll.scroll.scrollTo(0,0,500)
-
       this.$refs.scroll.scrollTo(0,0)
     },
 
     //对滚动的高度信息决定隐藏或者显示backtop组件
     contentScroll(position) {
-      // console.log(position);
-      this.isShowBackTop = -position.y > 1000
+      // 1、判断BackTop是否显示
+      this.isShowBackTop = (-position.y) > 1000
+      //2、决定tabControl是否吸顶
+      this.isTabFixed = (-position.y) > this.tabOffsetTop
     },
 
     //上拉加载更多 
@@ -110,18 +130,12 @@ export default {
       this.getHomeGoods(this.currentType)
     },
 
-    // 防抖节流函数方法封装  args是func函数需要传的参数
-    debounce(func,delay) {
-      let timer = null
-      return function(...args) {
-        if (timer) clearTimeout(timer)
-        timer = setTimeout(() => {
-          func.apply(this,args)
-        },delay)
-      }
+    //轮播图加载完成可以计算TabControl吸顶高度 是否吸顶
+    swiperImageLoad(){
+       // 获取tabControl的offsetTop
+      // 所有的组件都有一个属性$el:用于获取组件的元素的
+      this.tabOffsetTop = this.$refs.tabControl2.$el.offsetTop
     },
-
-
 
 
 
@@ -160,36 +174,32 @@ export default {
 
 <style scoped>
 #home{
-  padding-top: 44px;
+  /* padding-top: 44px; */
   height: 100vh;
+  position: relative;
 }
 .home-nav{
   background-color: var(--color-tint);
   color: #ffffff;
-  position: fixed;
+  /* 在用浏览器原生滚动时，为了让导航不跟随一起滚动用以下属性 */
+  /* position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  z-index: 99;
+  z-index: 99; */
 }
-.tab-control{
-  position: sticky;
-  top: 44px;
-  background-color: #fff;
-  z-index: 9;
-}
-/* .content{
-  overflow: hidden;
+/* 另一种方案 */
+.content{
   position: absolute;
   top: 44px;
   bottom: 49px;
   left: 0;
   right: 0;
-} */
-/* 另一种方案 */
-.content{
-  height: calc(100% - 49px);
   overflow: hidden;
 }
-
+.tab-control{
+  position: relative;
+  z-index: 9;
+  background-color: #fff;
+}
 </style>

@@ -46,27 +46,35 @@ export default {
   })
 
   //3、监听上拉事件
-  this.scroll.on('pullingUp',() => {
-    // 将这个事件发出去
-    this.$emit('pullingUp')
-  })
+  if(this.pullUpLoad) {
+      this.scroll.on('pullingUp',() => {
+      // 将这个事件发出去
+      this.$emit('pullingUp')
+    })
+  }
+ 
  },
 //  封装了返回顶部的方法,默认时间300毫秒
  methods: {
-   scrollTo(x, y, time=300) {
+   scrollTo(x, y, time=200) {
     //  防止挂载时间顺序问题导致出错，确定有值在进行调用方法
      this.scroll && this.scroll.scrollTo(x, y, time)
    },
 //  封装了结束完成一次下拉加载更多的方法
     finishPullUp() {
-      this.scroll.finishPullUp()
+      this.scroll && this.scroll.finishPullUp()
     },
 
 //  封装刷新方法，重新计算滚动区域的高度
     refresh() {
       this.scroll && this.scroll.refresh()
       console.log("防抖后执行scroll.refresh()一次");
-    }
+    },
+
+// 封装获取存储滚动到的位置y
+    getScrollY() {
+      return this.scroll ? this.scroll.y : 0
+    } 
 
  }
 }
