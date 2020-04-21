@@ -73,7 +73,7 @@ Mock.mock(new RegExp('http://123.207.32.32:8000/home/data.*'), 'post', (params) 
   var info = JSON.parse(params.body)
   // console.log(info)
   // 对生成的数据取值，这里分页从0开始需要-1,因为请求的从1开始
-  var [index, size, type] = [info.page, info.pageSize-1, info.type]
+  var [index, size, type] = [info.page-1, info.pageSize, info.type]
   // 单个种类的数据长度
   var [total] = [dataObj[type].length]
 
