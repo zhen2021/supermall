@@ -23,7 +23,28 @@
           return {}
         }
       }
+    },
+    data () {
+      return {
+        counter:0,
+        imagesLength:0  
+      }
+    },
+    methods: {
+      imgLoad() {
+        // 每次有图片加载完成 count+1
+        if (++this.counter === this.imagesLength){
+          this.$emit('imageLoad')
+        }
+      }
+    },
+    watch: {
+      //观察对象值改变
+      detailInfo() {
+        this.imagesLength = this.detailInfo.detailImage[0].list.length
+      }
     }
+
 	}
 </script>
 

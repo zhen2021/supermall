@@ -37,3 +37,14 @@ export class Shop {
   }
 }
 
+
+
+// 封装商品规格信息的数据
+export class GoodsParam {
+  constructor(info, rule) {
+    // images可能没有值，某些商品有值，某些没有
+    this.image = info.image ? this.image[0] : ''
+    this.infos = info.set
+    this.sizes = rule.tables
+  }
+}

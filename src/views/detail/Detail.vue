@@ -1,12 +1,12 @@
 <template>
   <div id="detail">
     <detail-nav-bar class="detail-nav"/>
-    <scroll class="content">
+    <scroll class="content" ref="scroll">
       <detail-swiper :topImages="topImages"/>
       <detail-base-info :goods="goods"/>
       <detail-shop-info :shop="shop"/>
-      <detail-goods-info :detailInfo="detailInfo"/>
-
+      <detail-goods-info :detailInfo="detailInfo" @imageLoad="imageLoad"/>
+      <detail-param-info :paramInfo="paramInfo"/>
     </scroll>
     
   </div>
@@ -18,9 +18,10 @@ import DetailSwiper from './childComps/DetailSwiper'
 import DetailBaseInfo from './childComps/DetailBaseInfo'
 import DetailShopInfo from './childComps/DetailShopInfo'
 import DetailGoodsInfo from './childComps/DetailGoodsInfo'
+import DetailParamInfo from './childComps/DetailParamInfo'
 import Scroll from 'components/common/scroll/Scroll'
 
-import {getDetail, Goods, Shop} from 'network/detail'
+import {getDetail, Goods, Shop, GoodsParam} from 'network/detail'
 
 export default {
   name:"Detail",
@@ -30,6 +31,7 @@ export default {
     DetailBaseInfo,
     DetailShopInfo,
     DetailGoodsInfo,
+    DetailParamInfo,
     Scroll
   },
   data () {
@@ -39,6 +41,7 @@ export default {
       goods:{},
       shop:{},
       detailInfo:{},
+      paramInfo:{},
     }
   },
 
@@ -61,7 +64,16 @@ export default {
 
     // 4.获取商品详细信息
     this.detailInfo = data.detailInfo
+
+    // 5.封装获取商品的参数
+    this.paramInfo = new GoodsParam(data.itemParams.info,data.itemParams.rule)
     })
+  },
+
+  methods: {
+    imageLoad() {
+      this.$refs.scroll.refresh()
+    }
   }
 }
 </script>

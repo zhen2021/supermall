@@ -103,7 +103,54 @@ const listMethods = function(num,type) {
             Random.image('600x750', '#49ace0', type+"商品展示id:"+listObject.id),
           ]
         }]
+      },
+
+      // 商品规格参数
+      itemParams: {
+        info: {
+          set:[
+            {key:"图案",value:"宫廷复古图/民族复古图，字母/文字/数字"},
+            {key:"厂名",value:"艾玫莉服饰有限公司"},
+            {key:"颜色",value:"黑白拼接"},
+            {key:"袖型",value:"常规袖"},
+            {key:"上衣厚度",value:"适中"},
+            {key:"尺码",value:"XL,L,M,XXL"},
+            {key:"衣长",value:"常规款（51-65cm）"},
+            {key:"版型",value:"宽松"},
+            {key:"季节",value:"春秋"},
+            {key:"厂址",value:"广东省揭阳市普宁市池尾镇政山老区"},
+            {key:"材质",value:"棉"},
+            {key:"领型",value:"圆领"},
+            {key:"元素",value:"面料拼接，平绣"},
+            {key:"袖长",value:"长袖"},
+            {key:"风格",value:"原宿"},
+            {key:"潮流",value:"韩系"},
+          ]
+        },
+        rule: {
+          tables:[
+            [
+              ["尺码","M","L","XL","XXL"],
+              ["衣长","61.5",'63','64.5','66'],
+              ["胸围","98",'104','110','116'],
+              ["袖长","63",'66','68.5','70.5']
+            ]
+          ]
+        },
+      },
+
+      // 评论信息数据  list是具体每一条一个对象
+      rate: {
+        crate:Random.natural(0, 500),
+        list:[
+          {
+            canExplain:false,
+            content: Random.cword(10,50),
+            style: "颜色：白色 上衣 尺码：L"
+          },
+        ]
       }
+
 
     }
 
