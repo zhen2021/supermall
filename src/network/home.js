@@ -12,7 +12,7 @@ export function getHomeGoods(type,page) {
   return request({
     method: 'post',
     url: '/home/data',
-    // 不能设为params
+    // post方式不能设为params
     data: {
       type,
       page
