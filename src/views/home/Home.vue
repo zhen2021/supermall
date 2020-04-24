@@ -29,6 +29,7 @@ import BackTop from 'components/content/backTop/BackTop'
 
 import {getHomeMultidata, getHomeGoods} from 'network/home'
 import {debounce} from 'common/utils'
+import {itemListenerMixin} from 'common/mixin'
 
 export default {
   name:'Home',
@@ -42,6 +43,7 @@ export default {
     Scroll,
     BackTop
   },
+
   data () {
     return {
       banners:[],
@@ -57,7 +59,7 @@ export default {
       isShowBackTop: false,
       tabOffsetTop:0,
       isTabFixed:false,
-      saveY:0
+      saveY:0,
     }
   },
   computed: {
@@ -73,7 +75,11 @@ export default {
     this.$refs.scroll.scrollTo(0, this.saveY ,0)
   },
   deactivated () {
+    // 保存Y值保存页面状态
     this.saveY = this.$refs.scroll.getScrollY()
+
+    // 取消事件监听
+    this.$bus.$off('itemImageLoad',this.itemImgListener)
   },
 
   //组件一旦创建好了发送网络请求
@@ -86,17 +92,25 @@ export default {
     this.getHomeGoods('sell')
   },
 
-  // 挂载图片不一定加载完，仅仅结构挂载
-  mounted () {
-    // 把函数传给防抖方法，接收的是方法返回的防抖函数，并且有闭包不会被回收
-    const refresh = debounce(this.$refs.scroll.refresh,200)
-    // 准备好通过事件总线监听事件，监听itemImageLoad图片加载完成
-    // 每次图片加载完成就行一次scroll的刷新，重新计算高度
-    this.$bus.$on('itemImageLoad',() => {
-      refresh()
-    })
 
-  },
+  // 直接在生命周期函数中混入该内容替代下方内容
+  mixins: [itemListenerMixin],
+
+  // 挂载图片不一定加载完，仅仅结构挂载
+  // mounted () {
+  //   // 把函数传给防抖方法，接收的是方法返回的防抖函数，并且有闭包不会被回收
+  //   const refresh = debounce(this.$refs.scroll.refresh,200)
+  //   // 准备好通过事件总线监听事件，监听itemImageLoad图片加载完成
+  //   // 每次图片加载完成就行一次scroll的刷新，重新计算高度
+
+  //   //对监听事件所要执行的函数进行保存
+  //   this.itemImgListener = () => {refresh()}
+  //   this.$bus.$on('itemImageLoad',this.itemImgListener)
+  // },
+
+
+
+  
   methods: {
     // tabControl单击事件 
     tabClick(index) {

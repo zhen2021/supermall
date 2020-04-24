@@ -1,9 +1,9 @@
 <template>
   <div class="goods-item" @click="itemClick">
-    <img :src="goodsItem.img" alt="" @load="imageLoad">
+    <img :src="showImage" alt="" @load="imageLoad">
     <div class="goods-info">
       <p>{{goodsItem.title}}</p>
-      <span class="price">{{goodsItem.price}}</span>
+      <span class="price">￥{{goodsItem.price}}</span>
       <!-- 收藏数 -->
       <span class="collect">{{goodsItem.cfav}}</span>
     </div>
@@ -21,11 +21,19 @@ export default {
       }
     }
   },
+  // 判断是否有值，没有用另一种方式取，这里用于两种不同格式的服务器返回的数据
+   computed: {
+    showImage() {
+      return this.goodsItem.img || this.goodsItem.show.img
+    }  
+  },
+
   methods: {
     imageLoad() {
       // 向事件总线发送事件
       this.$bus.$emit('itemImageLoad')
     },
+    // 路由跳转
     itemClick() {
       this.$router.push('/detail/' + this.goodsItem.id)
     }

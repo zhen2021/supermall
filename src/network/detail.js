@@ -1,5 +1,5 @@
 import {request} from "./request"
-
+// 请求商品详情
 export function getDetail(id) {
   return request({
     method: 'post',
@@ -10,6 +10,13 @@ export function getDetail(id) {
     }
   })
 }
+// 请求最下方商品推荐的数据
+export function getRecommend() {
+  return request({
+    url:'/recommend'
+  })
+}
+
 
 // 封装做DetailBaseInfo的数据
 export class Goods {
@@ -48,3 +55,4 @@ export class GoodsParam {
     this.sizes = rule.tables
   }
 }
+

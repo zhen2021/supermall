@@ -1,43 +1,3 @@
-/*const Mock = require('mockjs');
-// test测试使用mock
-// 获取 mock.Random 对象
-const Random = Mock.Random;
-// mock一组数据
-// const bannerData = function() {
-//   // 生成多条图片数据的方法
-//   const listMethods = function(num) {
-//       let list = []
-//       for (let i = 0; i < num; i++) {
-//         let listObject = {
-//           image: Random.image('750x390', '#02adea', 'photo'),
-//           link: Random.url('https'),
-//           title: Random.cword(4),
-//         }
-//         list.push(listObject)
-//       } 
-//         return list
-//     };
-
-//     return {
-//       data: {
-//         banner: {
-//           list: listMethods(4),
-//         },
-    
-//         recommend: {
-//           list: listMethods(4),
-//         }
-//       }
-//     }
-// }
-
-// Mock.mock( url, post/get , 返回的数据)；
-// Mock.mock('http://123.207.32.32:8000/home/multidata', 'get', bannerData);
-// console.log('---------mock.js已返回bannerData数据----------') 
-
-*/
-
-
 // -----------------------这里是生成商品数据------------------------------
 //mock.js 文件
 import Mock from 'mockjs' // 引入mockjs
@@ -145,8 +105,14 @@ const listMethods = function(num,type) {
         list:[
           {
             canExplain:false,
-            content: Random.cword(10,50),
-            style: "颜色：白色 上衣 尺码：L"
+            content: Random.cword(20,100),
+            style: "颜色：白色 上衣 尺码：L",
+            created:Random.natural(1000000000, 1999999999),
+            user: {
+              avatar: Random.image('50x50', '#49ace0', "Photo"),
+              uname: Random.cword(2,8),
+            },
+            images:[Random.image('100x100', '#49ace0', "Show"),Random.image('100x100', '#49ace0', "Show")]
           },
         ]
       }
@@ -163,7 +129,7 @@ const listMethods = function(num,type) {
 const dataObj = {
   pop:listMethods(120,'流行商品'),
   new:listMethods(150,'新款商品'),
-  sell:listMethods(200,'精选商品'),
+  sell:listMethods(200,'精品商品'),
 }
 
 
@@ -248,3 +214,54 @@ Mock.mock(new RegExp('http://123.207.32.32:8000/detail.*'), 'post', (params) => 
   }
   
 })
+
+// -----------------------商品详情页需要的商品推荐数据------------------------------
+Mock.mock('http://123.207.32.32:8000/recommend', 'get', () => {
+  return{
+    data:{
+      list: dataObj['sell'].slice(0, 20)
+    }
+  } 
+});
+
+
+
+
+
+
+
+
+
+// -----------------------首页的banner等数据模拟------------------------------
+const bannerData = function() {
+  // 生成多条图片数据的方法
+  const listM = function(num,type,size) {
+      let list = []
+      for (let i = 0; i < num; i++) {
+        let listObject = {
+          image: Random.image(size, '#02adea', type),
+          link: Random.url('https'),
+          title: Random.cword(4),
+        }
+        list.push(listObject)
+      } 
+        return list
+    };
+
+    return {
+      data: {
+        banner: {
+          list: listM(4,'Banner','750x390'),
+        },
+        recommend: {
+          list: listM(4,'Class','50x50'),
+        }
+      }
+    }
+}
+
+// Mock.mock( url, post/get , 返回的数据)；
+Mock.mock('http://123.207.32.32:8000/home/multidata', 'get', bannerData);
+
+
+
