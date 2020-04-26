@@ -1,4 +1,5 @@
 import {debounce} from "./utils"
+import BackTop from 'components/content/backTop/BackTop'
 
 
 // 混入
@@ -18,3 +19,27 @@ export const itemListenerMixin = {
     this.$bus.$on('itemImageLoad',this.itemImgListener)
   },
 }
+
+// 回到顶部的方法混入
+export const backTopMixin = {
+  components: {
+    BackTop
+  },
+  data(){
+    return {
+      isShowBackTop: false,
+    }
+  },
+  methods: {
+    backClick() {
+      // 拿到scroll组件，再拿到scroll属性对应对象，再使用其方法第三个参数是毫秒
+      // this.$refs.scroll.scroll.scrollTo(0,0,500)
+      this.$refs.scroll.scrollTo(0,0)
+    },
+    listenShowBackTop(position){
+      this.isShowBackTop = (-position.y) > 1000
+    }
+  }
+
+}
+

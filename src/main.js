@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'  //挂载Vuerouter
+import store from './store'  //挂载Vuex
 
 require('./mock/index')
 
@@ -11,5 +12,6 @@ Vue.prototype.$bus = new Vue()
 
 new Vue({
   render: h => h(App),
-  router
+  router,
+  store
 }).$mount('#app')

@@ -25,11 +25,10 @@ import FeatureView from './childComps/FeatureView'
 import TabControl from 'components/content/tabControl/TabControl'
 import GoodsList from 'components/content/goods/GoodsList'
 import Scroll from 'components/common/scroll/Scroll'
-import BackTop from 'components/content/backTop/BackTop'
 
 import {getHomeMultidata, getHomeGoods} from 'network/home'
 import {debounce} from 'common/utils'
-import {itemListenerMixin} from 'common/mixin'
+import {itemListenerMixin, backTopMixin} from 'common/mixin'
 
 export default {
   name:'Home',
@@ -41,7 +40,6 @@ export default {
     TabControl,
     GoodsList,
     Scroll,
-    BackTop
   },
 
   data () {
@@ -94,7 +92,7 @@ export default {
 
 
   // 直接在生命周期函数中混入该内容替代下方内容
-  mixins: [itemListenerMixin],
+  mixins: [itemListenerMixin, backTopMixin],
 
   // 挂载图片不一定加载完，仅仅结构挂载
   // mounted () {
@@ -125,16 +123,12 @@ export default {
       this.$refs.tabControl1.currentIndex = index
       this.$refs.tabControl2.currentIndex = index
     },
-    backClick() {
-      // 拿到scroll组件，再拿到scroll属性对应对象，再使用其方法第三个参数是毫秒
-      // this.$refs.scroll.scroll.scrollTo(0,0,500)
-      this.$refs.scroll.scrollTo(0,0)
-    },
+    
 
     //对滚动的高度信息决定隐藏或者显示backtop组件
     contentScroll(position) {
-      // 1、判断BackTop是否显示
-      this.isShowBackTop = (-position.y) > 1000
+      // 1、判断BackTop是否显示 在mixin.js
+      this.listenShowBackTop(position)
       //2、决定tabControl是否吸顶
       this.isTabFixed = (-position.y) > this.tabOffsetTop
     },

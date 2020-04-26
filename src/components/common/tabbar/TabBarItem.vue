@@ -42,7 +42,7 @@ export default {
   flex: 1;
   text-align: center;
   height: 49px;
-  font-size: 14px;
+  font-size: 12px;
 }
 .tab-bar-item img{
   width: 24px;
@@ -50,6 +50,6 @@ export default {
   margin-top: 3px;
   /* 去除文字和图片中间3px空隙 */
   vertical-align: middle;
-  margin-bottom: 2px;
+  margin-bottom: 5px;
 }
 </style>

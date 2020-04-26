@@ -49,6 +49,7 @@ export default {
   color: var(--color-high-text);
 }
 .back img{
-  margin-top: 11px;
+  margin-top: 12px;
+  height: 20px;
 }
 </style>

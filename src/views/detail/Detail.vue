@@ -1,8 +1,8 @@
 <template>
   <div id="detail">
-    <detail-nav-bar class="detail-nav" @titleClick="titleClick"/>
+    <detail-nav-bar class="detail-nav" @titleClick="titleClick" ref="nav"/>
 
-    <scroll class="content" ref="scroll">
+    <scroll class="content" ref="scroll" @scroll="contentScroll" :probeType="3">
       <!--事件可以大写 属性不区分大小写 topImages 传入值top—images -->
       <detail-swiper :top-images="topImages"/>
       <detail-base-info :goods="goods"/>
@@ -13,6 +13,9 @@
       <goods-list :goods="recommends" ref="recommend"/>
     </scroll>
     
+    <detail-bottom-bar @addCart="addToCart"/>
+    <back-top @click.native="backClick" v-show="isShowBackTop"/>
+
   </div>
 </template>
 
@@ -24,13 +27,14 @@ import DetailShopInfo from './childComps/DetailShopInfo'
 import DetailGoodsInfo from './childComps/DetailGoodsInfo'
 import DetailParamInfo from './childComps/DetailParamInfo'
 import DetailCommentInfo from './childComps/DetailCommentInfo'
+import DetailBottomBar from './childComps/DetailBottomBar'
 
 import Scroll from 'components/common/scroll/Scroll'
 import GoodsList from '../../components/content/goods/GoodsList'
 
 import {getDetail, getRecommend, Goods, Shop, GoodsParam} from 'network/detail'
 import {debounce} from 'common/utils'
-import {itemListenerMixin} from 'common/mixin'
+import {itemListenerMixin, backTopMixin} from 'common/mixin'
 
 
 
@@ -44,8 +48,9 @@ export default {
     DetailGoodsInfo,
     DetailParamInfo,
     DetailCommentInfo,
+    DetailBottomBar,
     Scroll,
-    GoodsList
+    GoodsList,
   },
   data () {
     return {
@@ -59,6 +64,7 @@ export default {
       recommends:[],
       themeTopYs:[],
       getThemeTopY:null,
+      currentIndex: 0,
     }
   },
 
@@ -106,13 +112,14 @@ export default {
       this.themeTopYs.push(this.$refs.params.$el.offsetTop)
       this.themeTopYs.push(this.$refs.comment.$el.offsetTop)
       this.themeTopYs.push(this.$refs.recommend.$el.offsetTop)
+      this.themeTopYs.push(Number.MAX_VALUE)
 
       console.log(this.themeTopYs);
     },50)
   },
 
   // 直接在生命周期函数中混入该内容代替下方内容
-  mixins: [itemListenerMixin],
+  mixins: [itemListenerMixin, backTopMixin],
 
   //  mounted () {
   //   // 把函数传给防抖方法，接收的是方法返回的防抖函数，并且有闭包不会被回收
@@ -136,7 +143,50 @@ export default {
     // 点击顶部nav-bar跳转相应位置  
     titleClick(index) {
       this.$refs.scroll.scrollTo(0, -(this.themeTopYs[index]), 200)
-    }
+    },
+
+    // scroll 滚动事件触发后，和themeTopYs的值比较,确定位置切换
+    contentScroll(position){
+      // 1、判断BackTop是否显示 在mixin.js
+      this.listenShowBackTop(position)
+
+      const positionY = -position.y
+      let length = this.themeTopYs.length
+      // 普通方法，没有加入this.themeTopYs.push(Number.MAX_VALUE)
+      // for(let i = 0;i < length; i++){
+      //   if(this.currentIndex !== i &&((i < length - 1 && positionY >= this.themeTopYs[i] && positionY < this.themeTopYs[i+1])|| (i === length - 1 && positionY >= this.themeTopYs[i]))) {
+      //     this.currentIndex = i
+      //     this.$refs.nav.currentIndex = this.currentIndex
+      //   }
+      // }
+
+      // hack做法  空间换时间
+      for(let i = 0;i < length; i++){
+        if(this.currentIndex !== i &&(i < length - 1 && positionY >= this.themeTopYs[i] && positionY < this.themeTopYs[i+1])){
+          this.currentIndex = i
+          this.$refs.nav.currentIndex = this.currentIndex
+        }
+      }
+    },
+
+  // 加入购物车
+      addToCart() {
+      // 1.创建对象
+      const product = {}
+      // 2.对象信息
+      product.id = this.id;
+      product.imgURL = this.topImages[0]
+      product.title = this.goods.title
+      product.desc = this.goods.desc;
+      product.newPrice = this.goods.nowPrice;
+
+      console.log(product);
+      
+      // 3.添加到Vuex  Store中 传入的actions
+      this.$store.dispatch('addCart', product)
+    },
+
+
   }
 }
 </script>
@@ -148,16 +198,13 @@ export default {
   background-color: #fff;
   height: 100vh;
 }
-.content {
-  height: calc(100% - 44px);
-  position: relative;
-  top: 44px;
-}
+ .content {
+    position: absolute;
+    top: 44px;
+    bottom: 60px;
+  }
 .detail-nav {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
+  position: relative;
   z-index: 9;
   background-color: #fff;
 }
