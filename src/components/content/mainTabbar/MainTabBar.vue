@@ -13,7 +13,7 @@
         <div slot="item-text">分类</div>
       </tab-bar-item>
 
-      <tab-bar-item path="/shopcart" activeColor="#1296db">
+      <tab-bar-item path="/cart" activeColor="#1296db">
         <img slot="item-icon" src="~assets/img/tabbar/shopcart.svg" alt="">
         <img slot="item-icon-active" src="~assets/img/tabbar/shopcart_active.svg" alt="">
         <div slot="item-text">购物车</div>

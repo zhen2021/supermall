@@ -183,7 +183,10 @@ export default {
       console.log(product);
       
       // 3.添加到Vuex  Store中 传入的actions
-      this.$store.dispatch('addCart', product)
+      this.$store.dispatch('addCart', product).then(res => {
+        // 使用toast插件
+        this.$toast.show(res,1500)
+      })
     },
 
 

@@ -20,9 +20,9 @@ const listMethods = function(num,type) {
     listObject.result = {
       itemInfo:{
         discountDesc: '活动价',
-        newPrice: '￥'+listObject.price,
-        lowNowPrice: '￥'+listObject.price,
-        oldPrice: '￥'+Random.natural(listObject.price, 500),
+        newPrice: listObject.price,
+        lowNowPrice: listObject.price,
+        oldPrice: Random.natural(listObject.price, 500),
         title: listObject.title,
         topImages:[
           Random.image('375x300', '#49ace0', type+"id:"+listObject.id),
