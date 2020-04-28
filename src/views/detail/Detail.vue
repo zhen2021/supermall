@@ -203,8 +203,9 @@ export default {
 }
  .content {
     position: absolute;
+    width: 100%;
     top: 44px;
-    bottom: 60px;
+    bottom: 49px;
   }
 .detail-nav {
   position: relative;

@@ -30,7 +30,12 @@ export default {
 
 <style scoped>
 .cart-list {
-  height: calc(100% - 44px - 49px - 40px);
+  /* 一些手机端不支持calc */
+  /* height: calc(100% - 44px - 49px - 40px); */
+  position: absolute;
+  top: 44px;
+  bottom: 89px;
+  width: 100%;
 }
 .content{
   height: 100%;

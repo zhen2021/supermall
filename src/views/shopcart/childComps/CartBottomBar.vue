@@ -3,7 +3,7 @@
     <check-button class="select-all" :is-checked="isSelectAll" @click.native="checkClick"></check-button>
     <span>全选</span>
     <span class="total-price">合计: ¥{{totalPrice}}</span>
-    <span class="buy-product">去计算({{checkedLength}})</span>
+    <span class="buy-product" @click="calcClick">去结算({{checkedLength}})</span>
   </div>
 </template>
 
@@ -30,6 +30,7 @@ export default {
       return this.cartList.filter(item => item.checked).length
     },
 
+    // 判断是否有没选中的
     isSelectAll() {
       if (this.cartList.length === 0) return false
 
@@ -39,6 +40,7 @@ export default {
   },
 
   methods: {
+    // 全选按钮
     checkClick() {
       // 全部选中了
       if (this.isSelectAll){
@@ -46,7 +48,13 @@ export default {
       }else{
         this.$store.commit('eachChecked')
       }
+    },
 
+    //结算前判断是否没选中商品
+    calcClick() {
+      if(!this.isSelectAll){
+        this.$toast.show('您还没有选择商品哦',2000)
+      }
     }
   }
 }
@@ -55,8 +63,10 @@ export default {
 <style scoped>
 .bottom-bar {
     width: 100%;
-    position: relative;
+    position: absolute;
+    bottom: 49px;
     height: 40px;
+    
     background-color: #eee;
     box-shadow: 0 -1px 3px rgba(0, 0, 0, .2);
     font-size: 14px;
@@ -80,10 +90,13 @@ export default {
     background-color: orangered;
     color: #fff;
     width: 100px;
-    height: 40px;
+    height: 30px;
     text-align: center;
-    line-height: 40px;
     float: right;
+
+    margin: 4px 8px 5px;
+    line-height: 30px;
+    border-radius: 30px;
   }
 
 </style>

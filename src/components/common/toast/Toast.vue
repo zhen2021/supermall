@@ -15,7 +15,7 @@ export default {
  },
 
   methods: {
-    show(message,duration) {
+    show(message,duration=1500) {
       this.isShow = true;
       this.message = message
 
@@ -35,9 +35,10 @@ export default {
   top: 50%;
   left: 50%;
   transform: translate(-50%,-50%);
-  padding: 5px 8px;
+  padding: 10px 15px;
   color: #fff;
   background-color: rgba(0, 0, 0, 0.7);
   z-index: 999;
+  border-radius: 8px;
 }
 </style>
