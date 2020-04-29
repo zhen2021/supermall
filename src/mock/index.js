@@ -254,7 +254,7 @@ const bannerData = function() {
           list: listM(4,'Banner','750x390'),
         },
         recommend: {
-          list: listM(4,'Class','50x50'),
+          list: listM(4,'Class','100x100'),
         }
       }
     }

@@ -65,7 +65,6 @@
   }
   .nav-bar {
     background-color: var(--color-tint);
-    font-weight: 700;
     color: #fff;
   }
   .account {
