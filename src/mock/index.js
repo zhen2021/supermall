@@ -233,21 +233,21 @@ Mock.mock('http://123.207.32.32:8000/recommend', 'get', () => {
 
 
 // -----------------------首页的banner等数据模拟------------------------------
+const listM = function(num,type,size) {
+  let list = []
+  for (let i = 0; i < num; i++) {
+    let listObject = {
+      image: Random.image(size, '#02adea', type),
+      link: Random.url('https'),
+      title: Random.cword(2,4),
+    }
+    list.push(listObject)
+  } 
+    return list
+};
+
 const bannerData = function() {
   // 生成多条图片数据的方法
-  const listM = function(num,type,size) {
-      let list = []
-      for (let i = 0; i < num; i++) {
-        let listObject = {
-          image: Random.image(size, '#02adea', type),
-          link: Random.url('https'),
-          title: Random.cword(4),
-        }
-        list.push(listObject)
-      } 
-        return list
-    };
-
     return {
       data: {
         banner: {
@@ -265,3 +265,28 @@ Mock.mock('http://123.207.32.32:8000/home/multidata', 'get', bannerData);
 
 
 
+
+
+
+
+//分类页面的数据请求 
+const CategoryData = function() {
+  let cList = ['热门推荐','手机数码','电脑办公','家用电器','计生情趣','个护清洁','美妆美肤','汽车用品','图书音像','医药保健','珠宝首饰','内衣配饰','生鲜','粮米油面','水果蔬菜','男装','男鞋','女装','女鞋','特产']
+  
+  // const  categoryList = [
+  //     {
+  //       classname:'热门推荐',
+  //       classlist: [],
+  //       },
+  //   ]
+  var CategoryList = []
+  for(let i= 0;i < cList.length;i++){
+    let obj = {}
+    obj.classname =  cList[i]
+    obj.classlist = listM(Random.natural(5, 20),'ClassItem','100x100')
+    CategoryList.push(obj)
+  }
+
+  return CategoryList
+}
+Mock.mock('http://123.207.32.32:8000/category', 'get', CategoryData);
