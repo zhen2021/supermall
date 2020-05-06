@@ -1,69 +1,87 @@
 <template>
   <div id="user-info">
-    <a href="#" class="clear-fix">
-      <slot name="user-icon">
-        <svg class="privateImage-svg left">
-          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#avatar-default"></use>
-        </svg>
-      </slot>
-      <div class="login-info left">
-        <slot name="user-nickname">
-          <div>登录/注册</div>
+      <div class="icon">
+        <slot name="user-icon">
+          <img src="~assets/img/profile/userIcon.svg" alt="">
         </slot>
-        <div class="phone">
-          <span>
-            <svg data-v-735ff1be="" fill="#fff" class="icon-mobile"><use data-v-735ff1be="" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#mobile"></use></svg>
-          </span>
-          <slot name="user-phone">暂无绑定手机号</slot>
-        </div>
       </div>
-      <svg data-v-735ff1be="" fill="#fff" class="arrow-svg right"><use data-v-735ff1be="" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow-right"></use></svg>
-    </a>
+
+      <div class="login-info">
+        <slot name="user-nickname">
+          <p>{{userName}}</p>
+        </slot>
+      </div>
+
+    <div class="account">
+      <div class="account-item" v-for="(item,index) in accountInfo" :key="index">
+        <p class="number">{{item.num}}</p>
+        <p class="title">{{item.title}}</p>
+      </div>
+
+    </div>
+
   </div>
 </template>
 
 <script>
 	export default {
-		name: "UserInfo"
+    name: "UserInfo",
+    props: {
+      accountInfo:{
+        type:Array,
+        default:{}
+      },
+      userName:{
+        type:String,
+        default:'登录/注册'
+      },
+    }
 	}
 </script>
 
 <style scoped>
   #user-info {
-    background-color: var(--color-tint);
-    padding: 15px;
-    margin-top: -5px;
+    background-image: linear-gradient(90deg,#fab3b3,#ffbcb3 73%,#ffcaba);
+    padding: 44px 10px 20px;
+    overflow: hidden;
+    border-bottom-left-radius: 5%;
+    border-bottom-right-radius: 5%;
+    color: #666;
   }
-  #user-info .privateImage-svg {
+  #user-info .icon {
     width: 60px;
     height: 60px;
-    background-color: #fff;
     border-radius: 30px;
-  }
-  .left {
+    background-color: #fff;
     float: left;
   }
-  #user-info .arrow-svg {
-    width: 11px;
-    height: 22px;
-    margin-top: 18px;
-  }
+   #user-info .icon img{
+     width: 100%;
+   }
   #user-info .login-info {
-    color: #fff;
-    margin: 10px 0 0 10px;
+    margin-left: 10px;
+    float: left;
+    font-weight: bold;
+    line-height: 60px;
   }
-  #user-info .login-info .phone {
-    position: relative;
-    font-size: 13px;
-    margin-top: 5px;
-    margin-left: 15px;
-    font-weight: 300;
+
+
+
+.account {
+  width: 100%;
+  display: flex;
+  padding-top: 15px;
   }
-  #user-info .login-info .phone .icon-mobile {
-    position: absolute;
-    width: 12px;
-    height: 18px;
-    left: -15px;
-    top: 0px;
-  }
+.account-item {
+  width: 100%;
+  margin-right: 1px;
+  text-align: center;
+  font-size: 12px;
+}
+.account-item .number{
+  line-height: 30px;
+  font-size: 16px;
+  font-weight:bold;
+}
+
 </style>

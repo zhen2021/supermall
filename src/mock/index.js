@@ -9,7 +9,7 @@ const listMethods = function(num,type) {
   for (let i = 0; i < num; i++) {
     let listObject = {
       id:Random.string( 'number', 7,7 ),
-      img: Random.image('600x800', '#49ace0', type),
+      img: Random.image('500x500', '#49ace0', type),
       link: Random.url('https'),
       title: Random.cword(30),
       cfav:Random.natural(0, 300),
@@ -25,9 +25,9 @@ const listMethods = function(num,type) {
         oldPrice: Random.natural(listObject.price, 500),
         title: listObject.title,
         topImages:[
-          Random.image('375x300', '#49ace0', type+"id:"+listObject.id),
-          Random.image('375x300', '#49ace0', type+"id:"+listObject.id),
-          Random.image('375x300', '#49ace0', type+"id:"+listObject.id)
+          Random.image('375x375', '#49ace0', type+"id:"+listObject.id),
+          Random.image('375x375', '#49ace0', type+"id:"+listObject.id),
+          Random.image('375x375', '#49ace0', type+"id:"+listObject.id)
         ]
       },
       columns:['销量'+Random.natural(0, 9999), '收藏'+listObject.cfav,'默认快递'],
@@ -122,7 +122,7 @@ const listMethods = function(num,type) {
 
     list.push(listObject)
   } 
-    return list
+  return list
 };
 
 
@@ -131,6 +131,36 @@ const dataObj = {
   new:listMethods(150,'新款商品'),
   sell:listMethods(200,'精品商品'),
 }
+
+
+
+  //  自定义模拟商品数据 
+  dataObj.pop[0].img = 'http://img12.360buyimg.com/mobilecms/s360x360_jfs/t1/93924/33/17079/197469/5e82f3d5Ed0754363/c343347283ec34d8.jpg!q70.dpg.webp'
+  dataObj.pop[0].result.itemInfo.topImages[0] = 'http://m.360buyimg.com/mobilecms/s750x750_jfs/t1/93924/33/17079/197469/5e82f3d5Ed0754363/c343347283ec34d8.jpg!q80.dpg.webp'
+  dataObj.pop[0].result.itemInfo.topImages[1] = 'http://m.360buyimg.com/mobilecms/s843x843_jfs/t1/96079/10/17036/172997/5e82f3d5E9cba0de5/1afe9da2512fb955.jpg!q70.dpg.webp'
+  dataObj.pop[0].result.itemInfo.topImages[2] = 'http://m.360buyimg.com/mobilecms/s843x843_jfs/t1/98165/7/17008/189747/5e82f3d6E2c03d8a6/b7206ce2febf5eb1.jpg!q70.dpg.webp'
+  dataObj.pop[0].result.itemInfo.title = '小赖猴2020春季新款韩版宽松牛仔外套女ins超火的时尚百搭长袖上衣开衫 蓝色 均码'
+  dataObj.pop[0].title = '小赖猴2020春季新款韩版宽松牛仔外套女ins超火的时尚百搭长袖上衣开衫 蓝色 均码'
+  dataObj.pop[0].result.shopInfo.name = '小赖猴女装旗舰店'
+  dataObj.pop[0].result.detailInfo.detailImage[0].list[0] = 'http://img30.360buyimg.com/popWaterMark/jfs/t1/102801/39/16982/254492/5e82f41dE19ba1ce4/4419d0e29e0a80eb.jpg!q70.dpg.webp'
+  dataObj.pop[0].result.detailInfo.detailImage[0].list[1] = 'http://img30.360buyimg.com/popWaterMark/jfs/t1/98833/2/16963/49323/5e82f41dEc3af83d0/b26fc9753f0e5373.jpg!q70.dpg.webp'
+  dataObj.pop[0].result.detailInfo.detailImage[0].list[2] = 'http://img30.360buyimg.com/popWaterMark/jfs/t1/103790/8/17080/77666/5e82f41dE88a7d545/5dc734f40cd47026.jpg!q70.dpg.webp'
+  dataObj.pop[0].result.detailInfo.detailImage[0].list[3] = 'http://img30.360buyimg.com/popWaterMark/jfs/t1/96450/40/16891/370289/5e82f41eE07a9cecc/1601a3b0d7aa7ace.jpg!q70.dpg.webp'
+  dataObj.pop[0].result.detailInfo.detailImage[0].list[4] = 'http://img30.360buyimg.com/popWaterMark/jfs/t1/108070/31/10914/222383/5e82f41fE876c3827/2823aaf7eeace53c.jpg!q70.dpg.webp'
+  dataObj.pop[0].result.detailInfo.detailImage[0].list[5] = 'http://img30.360buyimg.com/popWaterMark/jfs/t1/107088/33/17043/220693/5e82f41eEcea7f1ed/726be73e8ce41a5b.jpg!q70.dpg.webp'
+  dataObj.pop[0].result.detailInfo.detailImage[0].list[6] = 'http://img30.360buyimg.com/popWaterMark/jfs/t1/90072/15/17104/275091/5e82f41fE57435fd7/40bcece3110d827e.jpg!q70.dpg.webp'
+  
+  dataObj.pop[0].result.rate.list[0].images[0] = 'http://img30.360buyimg.com/shaidan/s128x96_jfs/t1/88151/20/18182/217159/5e92ebbdE7360f722/a52b4b7c568b111b.jpg!cc_100x100!q70.dpg.webp'
+  dataObj.pop[0].result.rate.list[0].images[1] = 'http://img30.360buyimg.com/shaidan/s128x96_jfs/t1/109026/3/12196/242104/5e92ebc0Ef87782ae/2331a08cb6987f4c.jpg!cc_100x100!q70.dpg.webp'
+  dataObj.pop[0].result.rate.list[0].content = '这件衣服是今年新款，上身效果很好，面料薄厚适中，非常适合春天穿，穿搭牛仔裤工装裤都可以，比较满意这次的购物，只是物流时间有点长让我等了一周，希望以后物流能够再快些。'
+  dataObj.pop[0].result.rate.list[0].user.uname = 'yangyang_aijj'
+  dataObj.pop[0].result.rate.list[0].user.avatar = 'http://storage.360buyimg.com/i.imageUpload/6a645f3630356337326665393965363431353131313336373934333835_sma.jpg'
+
+
+
+
+
+
 
 
 // list 分页接口()
@@ -251,10 +281,22 @@ const bannerData = function() {
     return {
       data: {
         banner: {
-          list: listM(4,'Banner','750x390'),
+          // list: listM(4,'Banner','750x390'),
+          list: [{image: 'http://m.360buyimg.com/mobilecms/s700x280_jfs/t1/115491/9/3412/135947/5ea7f15eE4e65a4c2/c71a891289bf42a1.jpg!cr_1125x445_0_171!q70.jpg.dpg'},
+          {image: 'http://m.360buyimg.com/mobilecms/s700x280_jfs/t1/89334/6/19290/132701/5e9cfa6aE43b43796/5c2e5a153e7ce375.jpg!cr_1125x445_0_171!q70.jpg.dpg'},
+          {image: 'http://imgcps.jd.com/ling4/100012686074/5omL5py66LSt5a6e5oOg/5aSH6LSn6LaF5YC8/p-5e7d9726dc9f2b4301a42c88/40f05556/cr_1125x445_0_171/s1125x690/q70.jpg'},
+          {image: 'http://m.360buyimg.com/mobilecms/s700x280_jfs/t1/110791/2/6340/151563/5ea93aebEa7bfd43e/c8b2484b697c985c.jpg!cr_1125x445_0_171!q70.jpg.dpg'},
+          ],
         },
         recommend: {
-          list: listM(4,'Class','100x100'),
+          // list: listM(4,'Class','100x100'),
+          list: [
+          {image: 'http://m.360buyimg.com/mobilecms/s120x120_jfs/t1/84753/1/16651/5549/5e7d5f9eE492c3864/4b9963fe16fae211.png.webp', title:'超市'},
+          {image: 'http://m.360buyimg.com/mobilecms/s120x120_jfs/t1/104104/6/16755/5068/5e7d6202E212fcc22/3fda8f7d8b63b55f.png.webp', title:'生鲜'},
+          {image: 'http://m.360buyimg.com/mobilecms/s120x120_jfs/t1/105719/14/16594/7294/5e7d605eE007a21e7/63392310fbb001a4.png.webp', title:'服饰'},
+          {image: 'http://m.360buyimg.com/mobilecms/s120x120_jfs/t1/99304/34/16507/5170/5e7ccacaE08d0d35d/ea8a30610a682386.png.webp', title:'美妆'},
+          {image: 'http://m.360buyimg.com/mobilecms/s120x120_jfs/t1/96542/9/16707/3569/5e7d62bcE5c4ee6a7/3bf6ac36ac9f17d9.png.webp', title:'服务'},
+          ],
         }
       }
     }
@@ -287,6 +329,147 @@ const CategoryData = function() {
     CategoryList.push(obj)
   }
 
+
+  
+  // 模拟真实数据
+  CategoryList[0].classlist[0].title = '手机'
+  CategoryList[0].classlist[0].image = 'http://img14.360buyimg.com/focus/s140x140_jfs/t27136/183/1628977274/31007/a6f7ed55/5be6ebd8Nb07ef492.png'
+  CategoryList[0].classlist[1].title = '冰箱'
+  CategoryList[0].classlist[1].image = 'http://img20.360buyimg.com/focus/s140x140_jfs/t21115/83/225125274/13856/5473fb3f/5b0567c1N59d53b27.png'
+  CategoryList[0].classlist[2].title = '电视'
+  CategoryList[0].classlist[2].image = 'http://img10.360buyimg.com/focus/s140x140_jfs/t1/99259/34/11845/15840/5e3e8258Ea2ebb9dd/50154478628700f6.jpg'
+  CategoryList[0].classlist[3].title = '微波炉'
+  CategoryList[0].classlist[3].image = 'http://img11.360buyimg.com/focus/s140x140_jfs/t13267/86/981023661/1871/6fae5f11/5a17f203N50016f64.jpg'
+  CategoryList[0].classlist[4].title = '饮料'
+  CategoryList[0].classlist[4].image = 'http://img20.360buyimg.com/focus/s140x140_jfs/t21136/27/148114098/21764/dfe7107f/5afeb956Na0fe3b4c.jpg'
+  CategoryList[0].classlist[5].title = '衣物清洁'
+  CategoryList[0].classlist[5].image = 'http://img10.360buyimg.com/focus/s140x140_jfs/t12136/32/190594635/3030/39a660be/5a057ef3N4b20576c.jpg'
+
+
+
   return CategoryList
 }
 Mock.mock('http://123.207.32.32:8000/category', 'get', CategoryData);
+
+
+
+
+
+
+
+
+const userData = [
+  {
+    name: '123456789',
+    passWord: '123456789',
+    token: '123133123',
+
+  },
+]
+
+// 登录请求
+Mock.mock('http://123.207.32.32:8000/login', 'post', (params) => {
+  var info = JSON.parse(params.body)
+  // console.log(info)
+  let username = info.username
+  let passWord = info.passWord
+  let len = userData.length
+  let userNameArr = [];
+  let passWordArr = [];
+
+  for (var i = 0; i < len; i++) {
+    userNameArr.push(userData[i].name);
+    passWordArr.push(userData[i].passWord);
+  }
+
+  // 查找判断账号
+  if (userNameArr.indexOf(username) === -1) {
+    return {
+      error_code:1,  
+      text: '账号不存在'
+    }  
+  } else {
+    var index = userNameArr.indexOf(username);
+    if (passWordArr[index] === passWord){
+      return {
+        error_code:1,   
+        text: '登录成功',
+        userInfo: userData[index]
+      }
+    }
+  }
+
+
+  return {
+    error_code:0,   //密码错误
+    text: '密码错误'
+  }
+
+});
+
+
+
+
+
+
+// token验证请求  免登陆状态
+Mock.mock('http://123.207.32.32:8000/login/token', 'post', (params) => {
+  var info = JSON.parse(params.body)
+  // console.log(info)
+  let token = info.token
+  let len = userData.length
+  let tokenArr = []
+
+  for (let i=0 ;i<len; i++){
+    tokenArr.push(userData[i].token);
+  }
+  let index = tokenArr.indexOf(token)
+  if (index === -1) {
+    return {
+      error_code: -1,  
+      text: '登录失效'
+    }  
+  }//更新token情况忽略  error_code:0, token：新值
+
+  return {
+    error_code: 1,
+    text:'状态有效',
+    userInfo: userData[index]
+  }
+});
+
+
+
+
+// 注册请求
+Mock.mock('http://123.207.32.32:8000/register', 'post', (params) => {
+  var info = JSON.parse(params.body)
+  // console.log(info)
+  let username = info.username
+  let len = userData.length
+  let userNameArr = [];
+
+  for (var i = 0; i < len; i++) {
+    userNameArr.push(userData[i].name);
+  }
+  // 账号不存在 即可注册
+  if(userNameArr.indexOf(username) === -1){
+    let userRegister = {
+      name: info.username,
+      passWord: info.passWord,
+      token:Random.string('number', 6, 10)
+    }
+    
+    userData.push(userRegister)
+    return {
+      error_code: 1,
+      text:'注册成功'
+    }
+  }
+
+  return {
+    error_code: 0,
+    text:'账号已存在'
+  }
+
+});

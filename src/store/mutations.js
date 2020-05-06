@@ -13,5 +13,15 @@ export default {
   },
   eachDisChecked(state) {
     state.cartList.forEach(item => item.checked = false)
-  }
+  },
+
+  // 存储用户信息
+  storeUserInfo(state,payload) {
+    state.userInfo = payload
+  },
+  //删除用户信息
+  deleteUserInfo(state) {
+    state.userInfo = {}
+  },
+
 }

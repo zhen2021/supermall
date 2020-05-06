@@ -73,7 +73,7 @@ export default {
       if(height >= this.maxY){
         this.$refs.scroll1.scrollTo(0,height,300)
       }
-      console.log(height)
+      // console.log(height)
     },
 
     getCategorydata() {
@@ -96,7 +96,6 @@ export default {
     updated() {
       this.$nextTick(() => {
        this.maxY = this.$refs.scroll1.scroll.maxScrollY
-        console.log(this.maxY)
       })
     }
 

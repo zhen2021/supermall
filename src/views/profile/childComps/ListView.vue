@@ -1,11 +1,11 @@
 <template>
     <div id="list">
       <div v-for="(item, index) in listData" :key="index" class="item">
-        <span class="icon">
-          <svg :fill="item.iconColor"><use :xlink:href="item.icon"></use></svg>
-        </span>
+        <img :src="item.img" alt="">
         <div class="info">{{item.info}}</div>
+
       </div>
+
     </div>
 </template>
 
@@ -24,32 +24,25 @@
 </script>
 
 <style scoped>
-  #list {
-    background-color: #fff;
-    font-size: 15px;
-    color: #333;
-  }
-  #list .item {
-    height: 44px;
-    line-height: 44px;
-    position: relative;
-  }
-  .icon svg {
-    width: 18px;
-    height: 18px;
-  }
-  .item .icon {
-    margin-top: 10px;
-    position: absolute;
-    left: 16px;
-    top: -7px;
-  }
-  .item .info {
-    margin-left: 40px;
-    border-bottom: 1px solid rgba(100, 100, 100, .1);
-    padding-left: 5px;
-  }
-  .item:last-of-type .info {
-    border-bottom: none;
-  }
+#list {
+  background-color: #fff;
+  font-size: 12px;
+  color: #333;
+  overflow: hidden;
+  padding:5px 15px 15px;
+  margin: 15px 10px;
+  border-radius: 10px;
+}
+#list .item{
+  text-align: center;
+  width: 20%;
+  float: left;
+  padding-top: 15px;
+}
+#list .item img {
+  max-width: 40%;
+}
+#list .item .info{
+  line-height: 25px;
+}
 </style>

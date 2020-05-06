@@ -10,8 +10,11 @@ Vue.use(Vuex)
 
 // 2、创建store对象
 const state = {
-  cartList:[]
+  cartList:[],
+  userInfo:{},
 }
+
+
 const store = new Vuex.Store({
   // 管理状态数据
   state,
